@@ -13,6 +13,20 @@ const client = new tmi.Client({
   },
   channels: ['oscar2325_'] // Puedes añadir varios canales separados por comas
 });
+// Datos curiosos
+const datosCuriosos = [
+  'Los koalas duermen alrededor de 20 horas al día.',
+  'El corazón de una ballena azul es tan grande que un humano podría nadar a través de sus arterias.',
+  'Las abejas pueden reconocer rostros humanos.',
+  'En Japón, existe una isla habitada casi exclusivamente por conejos.',
+  'La miel nunca se echa a perder. Se han encontrado tarros de miel en tumbas egipcias que tienen miles de años y aún están buenos para comer.'
+];
+
+// Función para obtener un dato curioso aleatorio
+function obtenerDatoCurioso() {
+  const indice = Math.floor(Math.random() * datosCuriosos.length);
+  return datosCuriosos[indice];
+}
 
 // Lista de palabras malsonantes
 const palabrasMalsonantes = ['Maricon', 'Puta', 'Gilipollas']; // Añade las palabras que desees detectar
@@ -40,12 +54,24 @@ client.on('message', (channel, tags, message, self) => {
 
   // Procesar el mensaje recibido
   // Aquí puedes añadir la lógica de tu bot y responder a los comandos
-
+ if (message.toLowerCase() === 'Discord') {
+  var disc=`https://discord.gg/BRNCXQF9t9`
+    client.say(disc);
+  }
   // Ejemplo: Responder "!hola" con un saludo
-  if (message.toLowerCase() === '!hola') {
+  if (message.toLowerCase() === 'hola') {
     client.say(channel, `¡Hola, ${tags.username}! ¿Cómo estás?`);
-  }d
+  }
+
+   // Procesar el mensaje recibido
+  // Ejemplo: Responder "!curiosidad" con un dato curioso
+  if (message.toLowerCase() === '!curiosidad') {
+    const datoCurioso = obtenerDatoCurioso();
+    client.say(channel, datoCurioso);
+  }
+ 
 });
 
 // Conectar el cliente al servidor de Twitch
 client.connect();
+
